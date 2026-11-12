@@ -1,0 +1,195 @@
+
+Lab3_9.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000c6  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .stab         000006cc  00000000  00000000  0000011c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  2 .stabstr      00000085  00000000  00000000  000007e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_aranges 00000020  00000000  00000000  0000086d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 0000001b  00000000  00000000  0000088d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000187  00000000  00000000  000008a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000111  00000000  00000000  00000a2f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000243  00000000  00000000  00000b40  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000020  00000000  00000000  00000d84  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000000ec  00000000  00000000  00000da4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000c5  00000000  00000000  00000e90  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_pubtypes 00000038  00000000  00000000  00000f55  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  00000f8d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
+  64:	0c 94 61 00 	jmp	0xc2	; 0xc2 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <main>:
+#include <util/delay.h>
+
+int main(void)
+{
+    // Настройка портов как выходы
+    DDRA = 0xFF;
+  6c:	8f ef       	ldi	r24, 0xFF	; 255
+  6e:	8a bb       	out	0x1a, r24	; 26
+    DDRB = 0xFF;
+  70:	87 bb       	out	0x17, r24	; 23
+    DDRC = 0xFF;
+  72:	84 bb       	out	0x14, r24	; 20
+    DDRD = 0xFF;
+  74:	81 bb       	out	0x11, r24	; 17
+    
+    // Инициализация портов в 0
+    PORTA = 0x00;
+  76:	1b ba       	out	0x1b, r1	; 27
+    PORTB = 0x00;
+  78:	18 ba       	out	0x18, r1	; 24
+    PORTC = 0x00;
+  7a:	15 ba       	out	0x15, r1	; 21
+    PORTD = 0x00;
+  7c:	12 ba       	out	0x12, r1	; 18
+    
+    // Настройка PC0 как вход с подтяжкой к VCC
+    DDRC &= ~(1 << PC0);
+  7e:	a0 98       	cbi	0x14, 0	; 20
+    PORTC |= (1 << PC0);
+  80:	a8 9a       	sbi	0x15, 0	; 21
+    
+    uint8_t letter_on = 0;
+    uint8_t prev = 1;
+  82:	21 e0       	ldi	r18, 0x01	; 1
+    
+    // Настройка PC0 как вход с подтяжкой к VCC
+    DDRC &= ~(1 << PC0);
+    PORTC |= (1 << PC0);
+    
+    uint8_t letter_on = 0;
+  84:	80 e0       	ldi	r24, 0x00	; 0
+        }
+        
+        // Управление светодиодами
+        if (letter_on)
+        {
+            PORTA = 0b11111111;
+  86:	4f ef       	ldi	r20, 0xFF	; 255
+            PORTB = 0b00011000;
+  88:	38 e1       	ldi	r19, 0x18	; 24
+  8a:	01 c0       	rjmp	.+2      	; 0x8e <main+0x22>
+    PORTC = 0x00;
+    PORTD = 0x00;
+    
+    // Настройка PC0 как вход с подтяжкой к VCC
+    DDRC &= ~(1 << PC0);
+    PORTC |= (1 << PC0);
+  8c:	29 2f       	mov	r18, r25
+    uint8_t letter_on = 0;
+    uint8_t prev = 1;
+    
+    while (1) 
+    {
+        uint8_t cur = (PINC & (1 << PC0)) ? 1 : 0;
+  8e:	93 b3       	in	r25, 0x13	; 19
+  90:	91 70       	andi	r25, 0x01	; 1
+        
+        // Детектирование нажатия (переход 1 -> 0)
+        if (prev == 1 && cur == 0)
+  92:	21 30       	cpi	r18, 0x01	; 1
+  94:	49 f4       	brne	.+18     	; 0xa8 <main+0x3c>
+  96:	99 23       	and	r25, r25
+  98:	39 f4       	brne	.+14     	; 0xa8 <main+0x3c>
+        {
+            letter_on = !letter_on;
+  9a:	82 27       	eor	r24, r18
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  9c:	ef e3       	ldi	r30, 0x3F	; 63
+  9e:	fc e9       	ldi	r31, 0x9C	; 156
+  a0:	31 97       	sbiw	r30, 0x01	; 1
+  a2:	f1 f7       	brne	.-4      	; 0xa0 <main+0x34>
+  a4:	00 c0       	rjmp	.+0      	; 0xa6 <main+0x3a>
+  a6:	00 00       	nop
+            _delay_ms(20); // Дебаунс кнопки
+        }
+        
+        // Управление светодиодами
+        if (letter_on)
+  a8:	88 23       	and	r24, r24
+  aa:	31 f0       	breq	.+12     	; 0xb8 <main+0x4c>
+        {
+            PORTA = 0b11111111;
+  ac:	4b bb       	out	0x1b, r20	; 27
+            PORTB = 0b00011000;
+  ae:	38 bb       	out	0x18, r19	; 24
+            PORTC = 0b00011000;
+  b0:	35 bb       	out	0x15, r19	; 21
+            PORTD = 0b11111111;
+  b2:	42 bb       	out	0x12, r20	; 18
+  b4:	81 e0       	ldi	r24, 0x01	; 1
+  b6:	ea cf       	rjmp	.-44     	; 0x8c <main+0x20>
+        }
+        else
+        {
+            PORTA = 0x00;
+  b8:	1b ba       	out	0x1b, r1	; 27
+            PORTB = 0x00;
+  ba:	18 ba       	out	0x18, r1	; 24
+            PORTC = 0x00;
+  bc:	15 ba       	out	0x15, r1	; 21
+            PORTD = 0x00;
+  be:	12 ba       	out	0x12, r1	; 18
+  c0:	e5 cf       	rjmp	.-54     	; 0x8c <main+0x20>
+
+000000c2 <_exit>:
+  c2:	f8 94       	cli
+
+000000c4 <__stop_program>:
+  c4:	ff cf       	rjmp	.-2      	; 0xc4 <__stop_program>
